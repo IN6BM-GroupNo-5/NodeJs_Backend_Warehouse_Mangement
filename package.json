@@ -1,0 +1,41 @@
+{
+  "name": "nodejs_backend_warehouse_mangement",
+  "version": "1.0.0",
+  "description": "📍 El objetivo de este proyecto (Parte de Backend) es desarrollar una aplicación web para la administración de una almacenadora de\r productos contando con la implementación efectiva del Stack MERN (MongoDB, Express, React, Node.js) para lograr\r un sistema de administración de almacenadora funcional y escalable completo.\r Este software permitirá a los usuarios gestionar el inventario, monitorizar el movimiento de\r productos, y llevar un control detallado de entradas y salidas en la almacenadora. Los usuarios clave de esta\r aplicación serán administradores de la almacenadora y empleados encargados de actualizar la información de\r inventario.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IN6BM-GroupNo-5/NodeJs_Backend_Warehouse_Mangement.git"
+  },
+  "keywords": [],
+  "author": "GroupNo_5_IN6BM",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/IN6BM-GroupNo-5/NodeJs_Backend_Warehouse_Mangement/issues"
+  },
+  "homepage": "https://github.com/IN6BM-GroupNo-5/NodeJs_Backend_Warehouse_Mangement#readme",
+  "dependencies": {
+    "argon2": "^0.43.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.14.0",
+    "morgan": "^1.10.0",
+    "nodejs_backend_warehouse_mangement": "file:",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
