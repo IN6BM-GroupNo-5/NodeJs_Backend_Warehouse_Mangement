@@ -9,7 +9,8 @@ import {
 import { 
     createProductValidator, 
     updateProductValidator, 
-    deleteProductValidator 
+    deleteProductValidator,
+    filterProductsValidator
 } from "../middlewares/products-validators.js";
 
 const router = Router();
@@ -20,6 +21,6 @@ router.put("/updateProduct/:id", updateProductValidator, updateProduct);
 
 router.delete("/deleteProduct/:id", deleteProductValidator, deleteProduct);
 
-router.get("/filterProducts", filterProducts);
+router.get("/filterProducts", filterProductsValidator, filterProducts);
 
 export default router;
