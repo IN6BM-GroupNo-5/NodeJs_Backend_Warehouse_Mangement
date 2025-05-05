@@ -2,6 +2,7 @@ export const hasRoles = (...roles) => {
     return (req, res, next) => {
         try {
             if (!req.userJwt) {
+                console.log(err);
                 return res.status(500).json({
                     success: false,
                     message: "It is necessary to verify your token before continuing."
