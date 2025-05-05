@@ -10,7 +10,7 @@ const options = {
             description:
                 "El objetivo de este proyecto es desarrollar una aplicación web para la administración de una almacenadora de productos, además de la implementación efectiva del Stack MERN (MongoDB, Express, React, Node.js) para lograr un sistema de administración de almacenadora funcional y escalable.",
             contact: {
-                name: "Anthony Josue Escobar Ponce",
+                name: "IN6BM_Group5",
                 email: "anthonyescobarponce@Outlook.com",
             },
         },
@@ -30,7 +30,8 @@ const options = {
         },
     },
     apis: [
-        "./src/movement/movement.routes.js"
+        "./src/auth/auth.routes.js", 
+        "./src/client/client.routes.js",
     ],
 };
 

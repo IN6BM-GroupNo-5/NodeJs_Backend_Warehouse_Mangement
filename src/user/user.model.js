@@ -1,37 +1,39 @@
 import { Schema, model } from "mongoose";
 
 const userSchema = Schema({
-    fullName: {
+    completeName: {
         type: String,
-        required: [true, "Name is required"],
-        maxLength: [150, "Only less than 25 characters"]
+        required: [true, "complete name is needed for your account"],
+        maxLength: [60, "Name cannot exceed 60 characters"]
     },
     email: {
         type: String,
-        required: [true, "Name is required"],
+        required: [true, "An email is required for your account"],
         unique: true
     },
     password: {
         type: String,
-        required: [true, "Password is required"]
+        required: [true, "A password is required for your account"]
     },
-
     role: {
         type: String,
-        required: true,
-        enum: ["ADMIN", "EMPLOYEE"],
+        enum: ["ADMINISTRATOR", "EMPLOYEE"],
         default: "EMPLOYEE"
     },
     status: {
         type: Boolean,
         default: true
     }
-});
+},
+    {
+        versionKey: false,
+        timestamps: true
+    });
 
-userSchema.methods.toJSON = function() {
-    const { password, _id, ...user } = this.toObject();
-    user.uid = _id;
-    return user;
+userSchema.methods.toJSON = function () {
+    const { password, _id, ...userDb } = this.toObject();
+    userDb.uid = _id;
+    return userDb;
 };
 
 export default model("User", userSchema);

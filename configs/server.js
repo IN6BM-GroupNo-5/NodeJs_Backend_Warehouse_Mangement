@@ -7,7 +7,8 @@ import morgan from 'morgan';
 import { hash } from "argon2";
 import { dbConnection } from './mongo.js';
 import User from "../src/user/user.model.js";
-import movementRoutes from "../src/movement/movement.routes.js";
+import authRoutes from "../src/auth/auth.routes.js";
+import clientRoutes from "../src/client/client.routes.js";
 import { swaggerDocs, swaggerUi } from "./swagger.js";
 
 class ExpressServer {
@@ -58,7 +59,8 @@ class ExpressServer {
     }
 
     routes(){
-        this.app.use("/warehouseManagement/v1/movement", movementRoutes);
+        this.app.use("/warehouseManagement/v1/auth", authRoutes);
+        this.app.use("/warehouseManagement/v1/client", clientRoutes);
         this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
     }
 
