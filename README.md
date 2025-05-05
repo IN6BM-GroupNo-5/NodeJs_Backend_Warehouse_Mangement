@@ -14,7 +14,6 @@ inventario.
 ## 💻🔒 Credenciales principales:
 ### Administrador:
 * 🔑 "email": "becheverria@gmail.com",
-* 🔑 "username": "becheverria",
 * 🔑 "password": "AdminPass@123"
 ## 📇 URL Vite/React :
 * 📍 http://localhost:5173/
