@@ -1,112 +1,85 @@
-import { hash, verify } from 'argon2';
 import User from "./user.model.js";
+import { hash } from "argon2";
 
-export const registerUser = async (req, res) => {
+export const createUser = async (req, res) => {
     try {
-        const data = req.body;
-        const encryptedPassword = await hash(data.password);
-        data.password = encryptedPassword;
-        
-        const user = await User.create(data);
-        
+        const admin = req.userJwt;
+        const dataReceived = req.body;
+
+        const encryptedPassword = await hash(dataReceived.password);
+
+        dataReceived.password = encryptedPassword;
+
+        const user = await User.create(dataReceived);
+
         return res.status(201).json({
-            message: "User successfully registered",
-            name: user.name,
-            email: user.email
+            message: "User registered succesfully",
+            account_created: {
+                completeName: user.completeName,
+                email: user.email,
+                role: user.role,
+                createdAt: user.createdAt
+            },
+            administrator_account: {
+                completeName: admin.completeName,
+                email: admin.email,
+                role: admin.role,
+            }
         });
     } catch (err) {
         return res.status(500).json({
-            success: false,
-            message: "Error registering the user",
+            message: "User creation failed,check the information",
             error: err.message
         });
     }
 };
 
-export const updateUser = async (req, res) => {
+
+export const getUsers = async (req, res) => {
     try {
-        const { user } = req;
-        const data = req.body;
+        const { limit = 10, from = 0 } = req.query;
+        const query = { status: true };
 
-        const existingUser = await User.findById(user._id);
-        if (!existingUser) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found"
-            });
-        }
+        const [total, usersFound] = await Promise.all([
+            User.countDocuments(query),
+            User.find(query)
+                .skip(Number(from))
+                .limit(Number(limit))
+        ]);
 
-        const passwordMatch = await verify(existingUser.password, data.password);
-        if (!passwordMatch) {
-            return res.status(403).json({
-                success: false,
-                message: "Incorrect password"
-            });
-        }
-
-        const updatedUser = await User.findOneAndUpdate(
-            user, { $set: data }, { new: true }
-        );
-
-        if (!updatedUser) {
-            return res.status(403).json({
-                success: false,
-                message: "Unable to update the user"
-            });
-        }
-        return res.status(200).json({
-            success: true,
-            message: "User successfully updated",
-            updatedUser
-        });
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: "Error updating the user",
-            error: err.message
-        });
-    }
-};
-
-export const updateAdminMode = async (req, res) => {
-    try {
-        const { uid } = req.params;
-        const data = req.body;
-        const adminToUpdate = await User.findOneAndUpdate(
-            { _id: uid, role: { $ne: "ADMIN" } }, { $set: data }, { new: true }
-        );
-
-        if (!adminToUpdate) {
-            return res.status(403).json({
-                success: false,
-                message: "Unable to update admin mode"
-            });
-        }
+        const usersList = usersFound.map(users => ({
+            name: users.completeName,
+            role: users.role,
+            email: users.email,
+            status: users.status,
+            createdAt: users.createdAt
+        }));
 
         return res.status(200).json({
             success: true,
-            message: "Admin mode successfully updated",
-            adminToUpdate
+            message: "users list got successfully",
+            total,
+            users: usersList
         });
+
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: "Error updating admin mode",
+            message: "Failed to get users",
             error: err.message
         });
     }
 };
 
-export const deactivateUserAdminMode = async (req, res) => {
+export const findUser = async (req, res) => {
     try {
+        const account = req.userJwt;
         const { uid } = req.params;
 
-        const userToDeactivate = await User.findOneAndUpdate(
-            { _id: uid, role: { $ne: "ADMIN" } }, { status: false }, { new: true }
-        );
+        const userFound = await User.findById(uid);
 
-        if (!userToDeactivate) {
-            return res.status(404).json({
+        if (!userFound || userFound.status === false) {
+            return res.status(400).json({
                 success: false,
                 message: "User not found"
             });
@@ -114,38 +87,116 @@ export const deactivateUserAdminMode = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "User successfully deactivated",
-            userToDeactivate
+            message: "Account found successfully",
+            administrator_account: {
+                name: account.completeName,
+                role: account.role
+            },
+            account_found: {
+                completeName: userFound.completeName,
+                email: userFound.email,
+                role: userFound.role,
+                createdAt: userFound.createdAt
+            }
         });
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: "Error deactivating the user",
+            message: "Failed to find this account",
             error: err.message
         });
     }
 };
 
-export const deactivateUser = async (req, res) => {
+
+export const editUser = async (req, res) => {
     try {
-        const { user } = req;
-        const userToDelete = await User.findOneAndUpdate(user, { status: false }, { new: true });
-        if (!userToDelete) {
-            return res.status(404).json({
+        const { uid } = req.params;
+        const newData = req.body;
+        const adminAccount = req.userJwt;
+
+        const account = await User.findById(uid);
+
+        if (!account) {
+            return res.status(400).json({
                 success: false,
-                message: "User not found"
+                message: "Employee not found"
             });
+        };
+
+        if (account.role === "ADMINISTRATOR") {
+            if (uid !== adminAccount._id.toString()) {
+                return res.status(400).json({
+                    success: false,
+                    message: "OOnly the administrator who owns this account can edit it"
+                });
+            };
+        };
+
+        if (newData.password) {
+            newData.password = await hash(newData.password);
         }
+
+        const employee = await User.findByIdAndUpdate(uid, newData, { new: true });
+
+        res.status(200).json({
+            success: true,
+            msg: 'Profile changes updated succesfully',
+            administrator_account: {
+                completeName: adminAccount.completeName,
+                role: adminAccount.role,
+            },
+            employee_account: {
+                completeName: employee.completeName,
+                role: employee.role,
+                createdAt: employee.createdAt,
+                updatedAt: employee.updatedAt
+            }
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            msg: 'failed to update profile changes for the employee',
+            error: err.message
+        });
+    }
+};
+
+export const deleteUser = async (req, res) => {
+    try {
+        const { uid } = req.params;
+        const adminAccount = req.userJwt;
+
+        const employee = await User.findByIdAndUpdate(uid, { status: false }, { new: true });
+
+        if (employee.role === "ADMINISTRATOR") {
+            if (uid !== adminAccount._id.toString()) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Only the administrator who owns this account can delete it"
+                });
+            };
+        };
 
         return res.status(200).json({
             success: true,
-            message: "User successfully deactivated",
-            userToDelete
+            message: "Account deleted successfully ",
+            administrator_account: {
+                completeName: adminAccount.completeName,
+                role: adminAccount.role,
+            },
+            employee_account: {
+                completeName: employee.completeName,
+                role: employee.role,
+                email: employee.email,
+                status: employee.status,
+                createdAt: employee.createdAt
+            }
         });
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: "Error deactivating the user",
+            message: "failed to delete employee account",
             error: err.message
         });
     }
