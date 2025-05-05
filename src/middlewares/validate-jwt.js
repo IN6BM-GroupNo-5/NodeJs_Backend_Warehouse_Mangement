@@ -3,7 +3,7 @@ import User from "../user/user.model.js";
 
 export const validateJWT = async (req, res, next) => {
     try {
-        let token = req.body.token || req.query.token || req.headers["authorization"];
+        let token = req.headers["authorization"] || req.query.token || req.body.token ;
         if (!token) {
             return res.status(400).json({
                 succes: false,
@@ -11,7 +11,7 @@ export const validateJWT = async (req, res, next) => {
             });
         }
 
-        token = token.replace(/^Bearer\s+/, "");
+        token = token?.replace(/^Bearer\s+/, "");
 
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
         const userFound = await User.findById(uid);
