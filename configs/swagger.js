@@ -30,8 +30,7 @@ const options = {
         },
     },
     apis: [
-        "./src/auth/auth.routes.js", 
-        "./src/client/client.routes.js",
+        "./src/product/product.routes.js"
     ],
 };
 

@@ -1,28 +1,25 @@
 'use strict'
+
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import { hash } from "argon2";
 import { dbConnection } from './mongo.js';
-import User from "../src/user/user.model.js";
-import authRoutes from "../src/auth/auth.routes.js";
-import clientRoutes from "../src/client/client.routes.js";
-import { swaggerDocs, swaggerUi } from "./swagger.js";
+import productsRoutes from "../src/products/products.routes.js";
 
 class ExpressServer {
-    constructor(){
+    constructor() {
         this.app = express();
         this.port = process.env.PORT;
         this.server = http.createServer(this.app);
 
         this.middlewares();
-        this.conectarDB().then(() => {this.defaultAdministratorAccount(); });
+        this.conectarDB();
         this.routes();
     }
 
-    async conectarDB(){
+    async conectarDB() {
         try {
             await dbConnection();
         } catch (err) {
@@ -31,45 +28,29 @@ class ExpressServer {
         }
     }
 
-    defaultAdministratorAccount = async () => {
-        try {
-            const admin = await User.findOne({ role: "ADMINISTRATOR" });
-            if (admin) return; 
-    
-            const defaultAdmin = {
-                completeName: "Braulio Jose Echeverria Montufar",
-                email: "braulio@gmail.com",
-                role: "ADMINISTRATOR",
-                password: await hash("AdminPass@123", 10)
-            };
-    
-            await User.create(defaultAdmin);
-    
-        } catch (err) {
-            throw new Error('Failed to create default admin account');
-        }
-    };
-
-    middlewares(){
-        this.app.use(express.urlencoded({extended: false}));
+    middlewares() {
+        this.app.use(express.urlencoded({ extended: false }));
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(helmet());
         this.app.use(morgan('dev'));
+        this.app.use(apiLimiter);
     }
 
-    routes(){
-        this.app.use("/warehouseManagement/v1/auth", authRoutes);
-        this.app.use("/warehouseManagement/v1/client", clientRoutes);
-        this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+    routes() {
+        this.app.use("/almacenadora/v1/products", productsRoutes);
     }
 
-    listen(){
+    listen() {
         this.server.listen(this.port, () => {
             console.log('Server running on port ', this.port);
         });
     }
 }
 
-export default ExpressServer;
+export const initServer = () => {
+    const server = new ExpressServer();
+    server.listen();
+};
 
+export default ExpressServer;
