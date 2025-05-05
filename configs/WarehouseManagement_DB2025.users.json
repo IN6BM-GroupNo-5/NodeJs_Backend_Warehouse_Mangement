@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "681436a6487ac3094677b8b5"
+  },
+  "completeName": "Braulio Jose Echeverria Montufar",
+  "email": "braulio@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$D3xL+/QIgdce77JRJI6maQ$VSi+grzEJocCH6WC/xmotWHZJtJnIv2kQ0r178/qbbA",
+  "role": "ADMINISTRATOR",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-02T03:06:14.331Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-02T03:06:14.331Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6814473c06c31254ed7cc24a"
+  },
+  "completeName": "Anthony Josue Escobar Ponce",
+  "email": "escobar@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$8vgowyf+k3WKTZrnfFm1VQ$nOoNpGOXlF+WoE8G9YKafH5LVJrK3Mvvpw04/Qe/xUw",
+  "role": "EMPLOYEE",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-02T04:17:00.550Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-02T04:40:25.129Z"
+  }
+}]

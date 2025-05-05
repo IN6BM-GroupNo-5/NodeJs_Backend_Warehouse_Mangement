@@ -1,0 +1,50 @@
+[{
+  "_id": {
+    "$oid": "6816755298e983cc4693d904"
+  },
+  "name": "Samsun A6 2025",
+  "category": "ELECTRONICS",
+  "supplier": {
+    "$oid": "6816688e347d59e05434598c"
+  },
+  "price": 8500,
+  "stock": 20,
+  "expireDate": {
+    "$date": "2036-06-30T00:00:00.000Z"
+  },
+  "status": true,
+  "entryDate": {
+    "$date": "2025-05-03T19:58:10.418Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-03T19:58:10.421Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-03T20:01:45.886Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6816812141cbb03f43e6955f"
+  },
+  "name": "Iphone pro max 11",
+  "category": "ELECTRONICS",
+  "supplier": {
+    "$oid": "6816811541cbb03f43e6955b"
+  },
+  "price": 12500,
+  "stock": 12,
+  "expireDate": {
+    "$date": "2040-06-30T00:00:00.000Z"
+  },
+  "status": true,
+  "entryDate": {
+    "$date": "2025-05-03T20:48:33.645Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-03T20:48:33.646Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-03T20:48:33.646Z"
+  }
+}]

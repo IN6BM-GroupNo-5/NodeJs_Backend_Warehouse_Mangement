@@ -1,0 +1,68 @@
+[{
+  "_id": {
+    "$oid": "6817ae30b208f2b7371b934f"
+  },
+  "move": "ENTRY",
+  "user": {
+    "$oid": "6814473c06c31254ed7cc24a"
+  },
+  "product": {
+    "$oid": "6816755298e983cc4693d904"
+  },
+  "quantity": 3,
+  "date": {
+    "$date": "2025-05-04T18:13:04.708Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T18:13:04.712Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T18:13:04.712Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817ae6bb208f2b7371b9353"
+  },
+  "move": "ENTRY",
+  "user": {
+    "$oid": "6814473c06c31254ed7cc24a"
+  },
+  "product": {
+    "$oid": "6816812141cbb03f43e6955f"
+  },
+  "quantity": 6,
+  "date": {
+    "$date": "2025-02-06T18:14:03.668Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T18:14:03.668Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T18:14:03.668Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6817afaf9fcbead5c553aced"
+  },
+  "move": "EXIT",
+  "user": {
+    "$oid": "6814473c06c31254ed7cc24a"
+  },
+  "product": {
+    "$oid": "6816812141cbb03f43e6955f"
+  },
+  "quantity": 5,
+  "reason": "Walmart sell",
+  "destination": "Walmart S.A",
+  "date": {
+    "$date": "2025-05-04T18:19:27.742Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-04T18:19:27.745Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-04T18:19:27.745Z"
+  }
+}]

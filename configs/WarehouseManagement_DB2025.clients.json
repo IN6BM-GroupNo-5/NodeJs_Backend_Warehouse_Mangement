@@ -1,0 +1,28 @@
+[{
+  "_id": {
+    "$oid": "6816971bf1e336197ee18fd9"
+  },
+  "name": "Walmart USA",
+  "email": "walmart@gmail.com",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-03T22:22:19.020Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-03T22:24:34.190Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68169730f1e336197ee18fdc"
+  },
+  "name": "Target USA",
+  "email": "target@gmail.com",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-03T22:22:40.980Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-03T22:26:14.424Z"
+  }
+}]

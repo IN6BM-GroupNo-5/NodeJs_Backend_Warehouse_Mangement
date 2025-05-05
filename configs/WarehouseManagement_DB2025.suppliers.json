@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "6816688e347d59e05434598c"
+  },
+  "name": "Samsung TLA",
+  "contactEmail": "samsungTLA@gmail.com",
+  "products": [
+    {
+      "$oid": "6815080570d375930c751fc0"
+    }
+  ],
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-03T19:03:42.855Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-03T19:03:42.855Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6816811541cbb03f43e6955b"
+  },
+  "name": "Apple INC USA",
+  "contactEmail": "apple@gmail.com",
+  "products": [],
+  "status": true,
+  "createdAt": {
+    "$date": "2025-05-03T20:48:21.491Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-03T20:48:21.491Z"
+  }
+}]
