@@ -1,32 +1,32 @@
-import User from "../user/user.model.js";
-import Product from "../product/product.model.js"
-import Supplier from "../supplier/supplier.model.js";
 import Client from "../client/client.model.js";
+import Provider from "../provider/provider.model.js";
 
-export const emailExists = async (email = " ") => {
-    const exists = await User.findOne({ email });
-    if (exists) {
-        throw new Error(`The email provided already exists`);
+// ---------- Validaciones para Clientes ----------
+export const clientExists = async (uid = " ") => {
+    const client = await Client.findById(uid);
+    if (!client) {
+        throw new Error("Client not found");
     }
 };
 
-export const userExists = async (uid = " ") => {
-    const exists = await User.findById(uid);
-    if (!exists) {
-        throw new Error(`The user provided doesnt exists`);
+export const clientNameExists = async (name = " ") => {
+    const client = await Client.findOne({ name });
+    if (!client) {
+        throw new Error("Client not found");
     }
 };
 
-export const validRole = async (role = " ") => {
-    if (role !== "ADMINISTRATOR" && role !== "EMPLOYEE") {
-        throw new Error(`Unvalid role`);
-    };
+// ---------- Validaciones para Proveedores ----------
+export const providerExists = async (uid = " ") => {
+    const provider = await Provider.findById(uid);
+    if (!provider) {
+        throw new Error("Provider not found");
+    }
 };
 
-
-export const clientExists = async (cid = " ") => {
-    const exists = await Client.findById(cid);
-    if (!exists) {
-        throw new Error(`The client provided doesnt exists`);
+export const providerNameExists = async (name = " ") => {
+    const provider = await Provider.findOne({ name });
+    if (!provider) {
+        throw new Error("Provider not found");
     }
 };
